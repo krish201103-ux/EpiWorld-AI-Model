@@ -1,0 +1,17 @@
+# Epiworld -- Python dependencies
+# Generated and verified against a clean install on Python 3.12.
+# Install with:  pip install -r requirements.txt
+#
+# If you hit build errors for tensorflow/xgboost on Windows, use a
+# virtual environment (venv or conda) rather than installing globally --
+# see README.md "Installation" for the exact steps.
+
+Flask==3.1.3
+numpy==2.4.4
+pandas==3.0.2
+scikit-learn==1.8.0
+xgboost==3.3.0
+tensorflow==2.21.0
+requests==2.33.1
+python-dotenv==1.0.1
+shap==0.52.0

@@ -1,0 +1,19 @@
+# Secrets -- never commit real credentials
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# OS / editor noise
+.DS_Store
+.vscode/
+.idea/
+
+# Uploaded/generated artifacts (if server.py writes any at runtime)
+*.log
+instance/
