@@ -1,5 +1,4 @@
-# Epiworld
-
+## Epiworld
 AI-powered epidemic intelligence and forecasting platform. Applies seven
 machine learning models (Random Forest, Ridge, Lasso, SVM, XGBoost, LSTM,
 GRU) to seven infectious diseases across 237+ countries, with an
@@ -83,7 +82,7 @@ python server.py
 ```
 
 The server starts at `http://127.0.0.1:5000` by default. Console output
-confirms the port and whether the EpiGem chatbot is enabled.
+Confirms the port and whether the EpiGem chatbot is enabled.
 
 To change host/port, set `EPIWORLD_HOST` / `EPIWORLD_PORT` in `.env`
 (see `.env.example` for all available options).
@@ -92,7 +91,7 @@ To change host/port, set `EPIWORLD_HOST` / `EPIWORLD_PORT` in `.env`
 
 1. **Home** -- landing page with an interactive world map and platform stats.
 2. **Dashboard** -- opens directly on the Live Summary: the best model is
-   auto-selected and forecast automatically for the current disease.
+   auto-selected and forecasts automatically for the current disease.
    Sidebar sections: Trends & Overview, Risk Map, Early Warning,
    Explainability, Simulation, and Forecast Settings (for picking a specific
    model/horizon manually).
@@ -102,11 +101,11 @@ To change host/port, set `EPIWORLD_HOST` / `EPIWORLD_PORT` in `.env`
 
 ## Methodology (summary)
 
-- Series are detrended (log-transform for large counts) before
+- Series are detrended (log-transformed for large counts) before
   feature-engineered models (Random Forest, XGBoost, Lasso, SVM) see them;
   Ridge uses trend + lag + moving-average + momentum features directly.
 - LSTM/GRU (2-layer RNN, 64→32 units, Dropout 0.2) are trained on raw
-  sequences for comparison.
+  Sequences for comparison.
 - **Validation:** walk-forward (rolling-origin, expanding-window)
   cross-validation across 6 folds -- not a single random train/test split --
   because epidemiological series are short and non-stationary, and ordinary
@@ -114,7 +113,7 @@ To change host/port, set `EPIWORLD_HOST` / `EPIWORLD_PORT` in `.env`
 - **Model selection:** for each disease, all 7 models are trained; the one
   with the highest out-of-sample (test) R² is auto-selected as the default,
   falling back to a discounted training R² only when a series is too short
-  to hold out a genuine test fold.
+  To hold out a genuine test fold.
 - **What the UI shows:** the dashboard deliberately does not display raw
   R²/RMSE/MAE/MAPE/AIC to end users. These are computed and used internally
   for model selection, but surfaced only as a plain-language Trend
@@ -134,15 +133,15 @@ Full methodology detail is on the **About** page in the running app.
   captured at build time. There is no scheduled refresh job -- updating the
   dataset means regenerating and replacing that file.
 - **Leading-zero trimming:** Some diseases have years of all-zero data before
-  reporting began for that disease/region. `forecast_service.select_series()`
+  Reporting began for that disease/region. `forecast_service.select_series()`
   trims those leading zeros before any model sees the series (implemented as
   a simple leading-edge scan, not interpolation -- zeros appearing after the
   series has started are left as real data points).
 - **Missing values (uploaded data):** on the Upload tab, rows missing a year
   or case value are dropped (`dropna`); non-numeric case/death values are
-  coerced to 0 rather than crashing the request. The year column is validated
+  Coerced to 0 rather than crashing the request. The year column is validated
   up front (Comment 8) -- if it contains no parseable numeric/date values at
-  all, the upload is rejected with a clear message instead of silently
+  All, the upload is rejected with a clear message instead of silently
   aggregating to nothing.
 - **Log-transform:** applied automatically whenever a series' maximum
   absolute value exceeds 1,000, to stabilize variance across the large swings
@@ -150,8 +149,8 @@ Full methodology detail is on the **About** page in the running app.
   is returned to the client -- the API never returns log-scale numbers.
 - **Minimum series length:** at least 3 data points after trimming are
   required for any model to run; fewer than 8 triggers the "small sample"
-  warning in the UI. COVID-19 in the bundled dataset has only 5 usable points
-  after trimming, which is enough for the RNN models but too few for the
+  Warning in the UI. COVID-19 in the bundled dataset has only 5 usable points
+  After trimming, which is enough for the RNN models but too few for the
   sklearn-family models to fit at all (see Known limitations below).
 
 See `Epiworld_Model_Evaluation_Report.xlsx` (Methodology sheet) for the
@@ -171,8 +170,8 @@ covers walk-forward CV and per-model architecture choices, which are about
 | `/api/explain/<model_name>` | POST | SHAP feature attribution for Random Forest/XGBoost (Comment 12). Returns `{"available": false, "reason": ...}` gracefully if `shap` isn't installed or the model isn't tree-based |
 
 All ML endpoints return train/test metrics (R², RMSE, MAE, MAPE, AIC) in
-the JSON response even though the dashboard UI doesn't render them --
-useful for building the consolidated evaluation report mentioned above.
+The JSON response even though the dashboard UI doesn't render them --
+Useful for building the consolidated evaluation report mentioned above.
 
 ## Configuration
 
