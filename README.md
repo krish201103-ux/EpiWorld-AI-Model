@@ -3,7 +3,7 @@
 AI-powered epidemic intelligence and forecasting platform. Applies seven
 machine learning models (Random Forest, Ridge, Lasso, SVM, XGBoost, LSTM,
 GRU) to seven infectious diseases across 237+ countries, with an
-integrated AI assistant (EpiGem, via Groq LLaMA 3.1) for platform Q&A.
+Integrated AI assistant (EpiGem, via Groq LLaMA 3.1) for platform Q&A.
 
 Built with Flask, scikit-learn, TensorFlow/Keras, XGBoost, and Chart.js.
 Research and educational use only.
@@ -222,5 +222,6 @@ raw numbers the dashboard UI deliberately keeps out of the end-user view.
 ## License / Use
 
 Research and educational use only.
-#   E p i W o r l d - A I - M o d e l  
+#   E p i W o r l d - A I - M o d e l 
+ 
  
